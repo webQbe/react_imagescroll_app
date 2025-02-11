@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Images from './components/Images'
 import './App.css'
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
               </h1>
             </div>
 
-            <div className="images">
-              
-            </div>
+            <Images 
+            /* Fetch images from API */
+            />
           </div>
         </div>
       </div>

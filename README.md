@@ -54,7 +54,17 @@
     - Select `JavaScript` & Enter
 
 4. Update `vite.config.js` file:
-    - Add `server: { port: 3000, }` in `defineConfig()`
+    - Add `server` to `defineConfig()`:
+        ```
+        server: { 
+            port: 3000, 
+            proxy: {
+            '/api': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false
+        }
+        ```
 
 5. Install dependencies:
     1. Open terminal and run `npm install`
