@@ -2,6 +2,7 @@
 
 - Using Unsplash API
 - Express Server back-end
+- Bulma CSS for styling
 
 
 ## Getting Started 
