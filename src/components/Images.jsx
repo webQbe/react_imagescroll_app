@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from 'react-infinite-scroll-component' //  To load more images as the user scrolls
+import Image from './Image';
 
 export class Images extends Component {
     // Store Images in State
     state = {
-        images: [], 
+        images: [], // ✅ Ensure it's an array
         count: 30, 
         start: 1
-            /* count = 30 (number of images to fetch)
-              start = 1 (starting page) */
     };
 
     // When the component mounts
@@ -20,19 +19,55 @@ export class Images extends Component {
         axios.get(`/api/photos?count=${count}&start=${start}`)
               .then(res => {
                   // Log Response
-                  console.log("Frontend API Response:", res.data);
+                  console.log("Frontend API Response:", res.data.results);
                   // When response arrives, update the state
-                  this.setState({ images: res.data || [] });
+                  this.setState({ images: res.data.results || [] }); 
+                  /* If res.data.results is empty or undefined, it sets images to an empty array ([]). */
               }) 
             .catch(error => console.error("Frontend API Error:", error)); // Log Errors
     }
 
+    fetchImages = () => {
+      const { count, start } = this.state;
+
+      // Update `start` state before making the request
+      this.setState({start: this.state.start + count}); /* This ensures that 
+      the next request starts from the correct index. */
+
+      axios.get(`/api/photos?count=${count}&start=${start}`)
+            .then(res => {
+                console.log("Frontend API Response:", res.data.results);
+                this.setState(
+                  { 
+                    images: Array.isArray(res.data.results) ? // If res.data.results is an array
+                      res.data.results : // Update this.state.images with it
+                      [] // Otherwise, set it to an empty array to prevent errors
+                  }
+                );
+            }) 
+          .catch(error => console.error("Frontend API Error:", error)); 
+    }
+
   render() {
-    // Log the state
-    console.log(this.state);
+    // Verify images is an array
+    console.log("Images state:", this.state.images);
     // Render div
     return (
-      <div>Hello</div>
+      <div className='images'>
+        <InfiniteScroll
+          // Load more images as the user scrolls
+          dataLength={this.state.images.length}
+          next={this.fetchImages}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+        >
+           { // Map through images and pass each image to Image component.
+            Array.isArray(this.state.images) && this.state.images // Ensure images is an array
+              .map(image => (
+                <Image key={image.id} image={image} />
+           ))} 
+        </InfiniteScroll>
+      </div>
     )
   }
 }
