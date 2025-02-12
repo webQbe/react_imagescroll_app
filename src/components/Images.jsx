@@ -36,13 +36,12 @@ export class Images extends Component {
 
       axios.get(`/api/photos?count=${count}&start=${start}`)
             .then(res => {
-                console.log("Frontend API Response:", res.data.results);
+                console.log("Frontend API Response :", res.data.results);
                 this.setState(
-                  { 
-                    images: Array.isArray(res.data.results) ? // If res.data.results is an array
-                      res.data.results : // Update this.state.images with it
-                      [] // Otherwise, set it to an empty array to prevent errors
-                  }
+                    { 
+                      // Preserve previously loaded images and append new ones
+                      images: this.state.images.concat(res.data.results)
+                    } 
                 );
             }) 
           .catch(error => console.error("Frontend API Error:", error)); 
