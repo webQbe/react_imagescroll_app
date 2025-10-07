@@ -1,5 +1,7 @@
 # React Infinite Image-Scroll app
+This repo is an adaptation of [React Infinite Scroll Challenge | Scotch.io](https://www.youtube.com/watch?v=gk_6BKiy6X4&list=PLillGF-RfqbY3c2r0htQyVbDJJoBFE6Rb&index=8&t=1s&pp=iAQB) by Brad Traversy. 
 
+I followed the tutorial to learn followings:
 - Using Unsplash API
 - Express Server back-end
 - Bulma CSS for styling
@@ -89,6 +91,12 @@
     }
     ```
 8. Run server with: `npm run dev`
+
+## Credits
+Original tutorial: [React Infinite Scroll Challenge | Scotch.io](https://www.youtube.com/watch?v=gk_6BKiy6X4&list=PLillGF-RfqbY3c2r0htQyVbDJJoBFE6Rb&index=8&t=1s&pp=iAQB) — Brad Traversy.
+
+## License
+MIT License
 
 
 
